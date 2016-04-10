@@ -1,0 +1,136 @@
+<html>
+	<head>
+		<script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
+		<script type="text/javascript">
+			function get_aas() {
+				$.ajax({
+					url: 'api.php',
+					success: function(data) {
+						$('.represent').html(JSON.parse(data).message);
+						$('.represent').fadeIn(500);
+					}
+				})
+			}
+
+			function burst() {
+			    var square_pop = document.querySelector('#js-square-pop');
+			    $('.represent').fadeOut(200);
+				var timeline = new mojs.Timeline();
+				timeline.add(new mojs.Burst({
+					parent: square_pop,
+					duration: 1700,
+					shape : 'circle',
+					fill: ['#8e44ad', '#0000cc', '#59ADFB'],
+					x: '50%',
+					y: '50%',
+					opacity: 0.6,
+					childOptions: { radius: {20:0} },
+					radius: {30:90},
+					count: 6,
+					isRunLess: true,
+					easing: mojs.easing.bezier(0.1, 1, 0.3, 1)
+				}));
+
+				timeline.add(new mojs.Burst({
+					parent: square_pop,
+					duration: 1200,
+					delay: 200,
+					shape : 'circle',
+					fill: '#8e44ad',
+					x: '50%',
+					y: '50%',
+					opacity: 0.6,
+					childOptions: { radius: {'rand(20,5)':0} },
+					radius: {90:150},
+					count: 18,
+					isSwirl: true,
+					swirlSize: 15,
+					isRunLess: true,
+					easing: mojs.easing.bezier(0.1, 1, 0.3, 1)
+				}));
+					// ring animation
+				timeline.add(new mojs.Transit({
+					parent: square_pop,
+					duration: 1500,
+					type: 'circle',
+					radius: {30: 100},
+					fill: 'transparent',
+					stroke: '#59ADFB',
+					strokeWidth: {30:0},
+					opacity: 0.6,
+					x: '50%',     
+					y: '50%',
+					isRunLess: true,
+					easing: mojs.easing.bezier(0.1, 1, 0.3, 1)
+				}));
+				timeline.add(new mojs.Transit({
+					parent: square_pop,
+					duration: 1600,
+					delay: 320,
+					type: 'circle',
+					radius: {30: 80},
+					fill: 'transparent',
+					stroke: '#0000cc',
+					strokeWidth: {20:0},
+					opacity: 0.3,
+					x: '50%',     
+					y: '50%',
+					isRunLess: true,
+					easing: mojs.easing.bezier(0.1, 1, 0.3, 1)
+				}));
+				timeline.start();
+	    	}
+		</script>
+
+		<style>
+		    body, html {
+				padding: 0;
+			}
+
+			body {
+				background: rgba(241, 226, 215, 0.2);
+			}
+
+			.square {
+				width:      300%;
+				height:     200px;
+				border-radius: 150% / 100px;
+				background: #8e44ad;
+				position:   absolute;
+				top: -175px;
+				left: -150%;
+			}
+
+			.square-pop {
+				width:      50px;
+				height:     50px;
+				border-radius: 25px;
+				background: #8e44ad;
+				position:   absolute;
+				border: 1px solid #8e44ad;
+				top: 50%;
+				left: 50%;
+				transform: translate(-25px, -25px);
+			}
+
+			.represent {
+				font-family: sans-serif;
+				width:      100%;
+				text-align: center;
+				color: #8e44ad;
+				position:   absolute;
+				top: 75%;
+				font-size: 20px;
+			}
+	    </style>
+	</head>
+	<body>
+
+    	<div class="square-pop" id="js-square-pop" onclick="burst(); get_aas()"></div>
+
+    	<div class="represent">Eat Shit!</div>
+
+	</body>
+
+    <script src="https://cdn.jsdelivr.net/mojs/latest/mo.min.js"></script>
+</html>
